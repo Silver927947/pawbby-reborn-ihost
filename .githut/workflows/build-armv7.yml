@@ -1,1 +1,42 @@
+name: Build Pawbby Reborn ARMv7
 
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pawbby_reborn/**'
+      - '.github/workflows/build-armv7.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ARMv7 image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./pawbby_reborn
+          file: ./pawbby_reborn/Dockerfile
+          platforms: linux/arm/v7
+          push: true
+          tags: ghcr.io/silver927947/pawbby-reborn-ihost:0.1.0
