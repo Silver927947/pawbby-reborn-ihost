@@ -1,24 +1,12 @@
-# Pawbby Reborn per SONOFF iHost ARMv7
+# Pawbby Reborn iHost (ARMv7)
 
-Add-on non ufficiale per SONOFF iHost.
+Add-on personalizzato per SONOFF iHost ARMv7. L'immagine viene compilata e pubblicata su GHCR tramite GitHub Actions.
 
-## Stato
+## Primo utilizzo
+1. Caricare i file di questo archivio nella repository `Silver927947/pawbby-reborn-ihost`, mantenendo la struttura delle cartelle.
+2. Verificare che GitHub Actions sia abilitato in **Settings → Actions → General**.
+3. Fare commit/push. In **Actions**, controllare il workflow `Build Pawbby Reborn ARMv7`.
+4. Quando la build riesce, rendere pubblico il package GHCR `pawbby-reborn-ihost` (Packages → Package settings → Change visibility → Public), altrimenti iHost non potrà scaricare l'immagine senza autenticazione.
+5. In iHost, aggiungere la repository e scegliere **Check for updates**.
 
-Questo repository costruisce Pawbby Reborn direttamente sull'architettura ARMv7 di iHost.
-L'immagine upstream non viene usata direttamente: il Dockerfile scarica il sorgente Pawbby,
-applica l'adattamento Prisma Rust-free, installa le dipendenze e compila l'app.
-
-## Installazione su iHost
-
-1. In iHost aggiungere questo repository:
-   `https://github.com/Silver927947/pawbby-reborn-ihost`
-2. Cercare **Pawbby Reborn**.
-3. Installare l'add-on.
-4. Avviare l'add-on.
-5. Aprire la Web UI su `http://IP_DELL_ihost:3333`.
-
-L'add-on usa `host_network` perché Pawbby deve poter comunicare localmente con i dispositivi Tuya/Pawbby.
-
-## Nota
-
-La prima installazione deve compilare Pawbby sull'iHost e può richiedere diversi minuti.
+Nota: questa è una prima build sperimentale per ARMv7, non una build già collaudata. Non installare l'add-on finché il workflow non termina con successo.

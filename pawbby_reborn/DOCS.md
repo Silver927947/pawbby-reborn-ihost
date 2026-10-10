@@ -1,14 +1,7 @@
 # Pawbby Reborn iHost
 
-## Dati
+- Interfaccia web: porta TCP 3333.
+- Database persistente: `/data/pawbby.db`, salvato nella cartella di configurazione dell'add-on.
+- Rete host attiva per la comunicazione locale Tuya/PAWBBY.
 
-Il database persistente è `/data/pawbby.db`.
-
-## Rete
-
-L'add-on usa la rete host per consentire il traffico locale richiesto da Pawbby/Tuya.
-La Web UI ascolta sulla porta 3333.
-
-## Architettura
-
-Questa build è destinata a `armv7`, cioè l'architettura ARMv7 usata da SONOFF iHost.
+Questa prima build è sperimentale per ARMv7. Controllare i log di GitHub Actions e dell'add-on prima di considerarla funzionante.

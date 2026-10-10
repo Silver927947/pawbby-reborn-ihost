@@ -1,29 +1,26 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import fs from 'node:fs';
 
-const schemaPath = "prisma/schema.prisma";
-let schema = readFileSync(schemaPath, "utf8");
-schema = schema.replace(
-  `generator client {
-  provider = "prisma-client-js"
-}`,
-  `generator client {
+const schemaPath = 'prisma/schema.prisma';
+let schema = fs.readFileSync(schemaPath, 'utf8');
+const oldGenerator = /generator client\s*\{[^}]*\}/m;
+const newGenerator = `generator client {
   provider   = "prisma-client"
   output     = "../generated/prisma"
   engineType = "client"
-}`
-);
-if (!schema.includes('provider   = "prisma-client"')) {
-  throw new Error("Pawbby schema format changed: Prisma generator block not found.");
+}`;
+if (!oldGenerator.test(schema)) {
+  throw new Error('Non trovo il blocco generator client atteso in prisma/schema.prisma');
 }
-writeFileSync(schemaPath, schema);
+schema = schema.replace(oldGenerator, newGenerator);
+fs.writeFileSync(schemaPath, schema);
 
-const prismaPath = "server/utils/prisma.ts";
-let prisma = readFileSync(prismaPath, "utf8");
-if (!prisma.includes("from '@prisma/client'")) {
-  throw new Error("Pawbby prisma.ts format changed: @prisma/client import not found.");
+const utilPath = 'server/utils/prisma.ts';
+let util = fs.readFileSync(utilPath, 'utf8');
+const oldImport = "from '@prisma/client'";
+const newImport = "from '../../generated/prisma/client'";
+if (!util.includes(oldImport)) {
+  throw new Error('Non trovo l’import @prisma/client atteso in server/utils/prisma.ts');
 }
-prisma = prisma.replace(
-  "from '@prisma/client'",
-  "from '../../generated/prisma/client'"
-);
-writeFileSync(prismaPath, prisma);
+util = util.replace(oldImport, newImport);
+fs.writeFileSync(utilPath, util);
+console.log('Patch Prisma applicata.');

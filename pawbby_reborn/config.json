@@ -1,32 +1,27 @@
 {
   "name": "Pawbby Reborn",
-  "version": "0.8.0-ihost-armv7.2",
-  "slug": "pawbby_reborn",
-  "description": "Pawbby Reborn adattato per SONOFF iHost ARMv7",
-  "url": "https://github.com/Silver927947/pawbby-reborn-ihost",
+  "version": "0.1.0",
+  "slug": "pawbby_reborn_armv7",
+  "description": "Pawbby Reborn locale per SONOFF iHost ARMv7",
+  "url": "https://github.com/larsjarred9/Pawbby-Reborn",
+  "startup": "application",
+  "boot": "auto",
   "arch": [
     "armv7"
   ],
-  "startup": "application",
-  "boot": "auto",
   "init": false,
   "host_network": true,
-  "apparmor": false,
-  "webui": "http://[HOST]:3333",
-  "environment": {
-    "DATABASE_URL": "file:/data/pawbby.db",
-    "HOST": "0.0.0.0",
-    "PORT": "3333",
-    "NODE_ENV": "production",
-    "DISABLE_UPDATES": "true"
+  "ports": {
+    "3333/tcp": 3333
   },
-  "options": {},
-  "schema": {},
   "map": [
     {
       "type": "addon_config",
       "read_only": false,
       "path": "/data"
     }
-  ]
+  ],
+  "options": {},
+  "schema": {},
+  "image": "ghcr.io/silver927947/pawbby-reborn-ihost"
 }
